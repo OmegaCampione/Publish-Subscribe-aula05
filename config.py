@@ -16,6 +16,8 @@ DLX_EXCHANGE = "notificacoes.dlx"
 DLQ_QUEUE = "notificacoes.dlq"
 DLQ_ROUTING_KEY = "notificacoes.dlq"
 
+FANOUT_EXCHANGE = "pedidos.fanout"
+
 MAX_DELIVERIES = int(os.getenv("MAX_DELIVERIES", "3"))
 RETRY_DELAY_SECONDS = float(os.getenv("RETRY_DELAY_SECONDS", "1"))
 

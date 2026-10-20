@@ -1,5 +1,7 @@
+import argparse
 import json
 import logging
+import os
 import time
 from decimal import Decimal, InvalidOperation
 
@@ -115,7 +117,26 @@ def callback(channel, method, properties, body: bytes) -> None:
     channel.basic_ack(delivery_tag=method.delivery_tag)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Consome notificações da fila principal."
+    )
+    parser.add_argument(
+        "--name",
+        default=os.getenv("CONSUMER_NAME", f"consumer-{os.getpid()}"),
+        help="Nome desta instância, usado nos logs e no consumer tag.",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
+
+    # Usa o nome da instância no logger para diferenciar consumidores
+    # concorrentes que leem da mesma fila.
+    global logger
+    logger = logging.getLogger(f"consumer.{args.name}")
+
     connection = create_connection()
     try:
         channel = connection.channel()
@@ -132,12 +153,13 @@ def main() -> None:
             on_message_callback=callback,
             auto_ack=False,
             exclusive=False,
-            consumer_tag="consumer-notificacoes",
+            consumer_tag=f"consumer-notificacoes-{args.name}",
         )
 
         logger.info(
-            "Aguardando mensagens em '%s' (quorum, limite=%s tentativas). "
-            "Ctrl+C para encerrar.",
+            "Instância '%s' aguardando mensagens em '%s' "
+            "(quorum, limite=%s tentativas). Ctrl+C para encerrar.",
+            args.name,
             MAIN_QUEUE,
             MAX_DELIVERIES,
         )

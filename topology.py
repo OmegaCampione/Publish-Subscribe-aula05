@@ -2,11 +2,23 @@ from config import (
     DLQ_QUEUE,
     DLQ_ROUTING_KEY,
     DLX_EXCHANGE,
+    FANOUT_EXCHANGE,
     MAIN_EXCHANGE,
     MAIN_QUEUE,
     MAIN_ROUTING_KEY,
     MAX_DELIVERIES,
 )
+
+
+def declare_fanout_exchange(channel) -> None:
+    """Declara o exchange fanout usado pelo padrão publish/subscribe."""
+    # O fanout ignora routing keys e entrega uma cópia para cada fila
+    # vinculada. As filas são criadas e vinculadas pelos consumidores.
+    channel.exchange_declare(
+        exchange=FANOUT_EXCHANGE,
+        exchange_type="fanout",
+        durable=True,
+    )
 
 
 def declare_topology(channel) -> None:

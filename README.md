@@ -108,6 +108,92 @@ python dlq_consumer.py
 As mensagens 124 e 125 serão entregues três vezes no total, conforme o log do
 consumidor principal, e depois aparecerão na DLQ com o cabeçalho `x-death`.
 
+## Consumidores concorrentes na fila principal
+
+Várias instâncias do mesmo consumer podem ler da fila `notificacoes`. Com
+`prefetch_count=1`, o RabbitMQ entrega cada mensagem a apenas um consumidor e
+alterna a distribuição entre os consumidores disponíveis.
+
+Encerre o consumer anterior e abra dois terminais:
+
+```bash
+# Terminal 1
+python consumer.py --name consumer-1
+
+# Terminal 2
+python consumer.py --name consumer-2
+```
+
+Em um terceiro terminal, publique mensagens:
+
+```bash
+python producer.py --demo
+```
+
+Cada linha de log identifica a instância que processou o pedido:
+
+```text
+[consumer.consumer-1] [ACK] id_pedido=123 ...
+[consumer.consumer-2] [ACK] id_pedido=126 ...
+```
+
+No painel de management, a fila `notificacoes` deve mostrar dois consumidores.
+A divisão é aproximadamente round-robin; a ordem e a quantidade exata podem
+variar conforme o tempo de processamento e o momento em que cada instância se
+conectou.
+
+## Publish/Subscribe com fanout
+
+Neste padrão, o produtor publica em um exchange `fanout` e cada consumidor
+declara sua própria fila temporária. Todas as filas vinculadas recebem uma
+cópia de cada evento.
+
+```text
+producer_fanout.py
+        |
+        v
+pedidos.fanout (fanout)
+        |-------------------------|
+        v                         v
+fila temporária              fila temporária
+[Notificações]                    [Analytics]
+```
+
+Abra dois terminais e inicie os consumidores:
+
+```bash
+# Terminal 1
+python consumer_notificacoes.py
+
+# Terminal 2
+python consumer_analytics.py
+```
+
+Em um terceiro terminal, publique os eventos:
+
+```bash
+python producer_fanout.py --demo
+```
+
+O modo `--demo` publica três eventos com intervalo de um segundo. Ambos os
+consumidores devem exibir os mesmos `id_pedido`:
+
+```text
+[Notificações] Processando id_pedido=201 cliente=Ana valor=99.90
+[Analytics] Processando id_pedido=201 cliente=Ana valor=99.90
+```
+
+Também é possível publicar um evento específico:
+
+```bash
+python producer_fanout.py --id-pedido 300 --cliente "Maria" --valor 99.90
+```
+
+As filas fanout são exclusivas, temporárias e têm nomes como
+`amq.gen-...`. Elas são removidas quando o consumer encerra. Por isso, inicie os
+consumidores antes do produtor; eventos publicados sem filas vinculadas são
+descartados.
+
 ## Como a falha é simulada
 
 O consumer rejeita mensagens cujo valor seja negativo ou um número inteiro par:
