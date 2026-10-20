@@ -1,0 +1,19 @@
+1. Quando uma fila é mais adequada que uma chamada HTTP direta?
+
+Uma fila é mais adequada quando o processamento não precisa acontecer imediatamente, permitindo que o produtor envie a mensagem sem esperar o consumidor processá-la. Isso reduz o acoplamento entre os serviços.
+
+2. Qual a diferença entre Queue e Publish/Subscribe?
+
+Na Queue, as mensagens são distribuídas entre consumidores para dividir o trabalho. No Publish/Subscribe, um evento é distribuído para vários assinantes independentes, permitindo que diferentes serviços recebam a mesma informação.
+
+3. Por que acknowledgement pode levar a redelivery?
+
+Porque, se o consumidor falhar antes de confirmar o processamento da mensagem com um acknowledgement (ack), o RabbitMQ poderá enviá-la novamente.
+
+4. Qual a relação entre at-least-once e idempotência?
+
+O at-least-once permite que uma mensagem seja entregue mais de uma vez. Por isso, a idempotência é importante para evitar que o processamento repetido cause efeitos duplicados.
+
+5. Qual a finalidade de uma Dead Letter Queue?
+
+A Dead Letter Queue (DLQ) armazena mensagens que não puderam ser processadas, permitindo investigar os erros sem deixar essas mensagens problemáticas na fila principal.

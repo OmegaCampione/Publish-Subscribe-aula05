@@ -1,0 +1,74 @@
+consumer logs:
+2026-10-20 15:26:14,193 [INFO] consumer - Aguardando mensagens em 'notificacoes' (quorum, limite=3 tentativas). Ctrl+C para encerrar.
+2026-10-20 15:28:54,574 [INFO] consumer - [ACK] id_pedido=123 cliente=Ana valor=99.9 tentativa=1 processado.
+2026-10-20 15:28:54,584 [WARNING] consumer - Falha simulada: id_pedido=124 cliente=Bruno valor=150.0 tentativa=1.
+2026-10-20 15:28:54,585 [WARNING] consumer - [NACK] id_pedido=124 tentativa=1/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:28:55,585 [WARNING] consumer - Falha simulada: id_pedido=124 cliente=Bruno valor=150.0 tentativa=2.
+2026-10-20 15:28:55,585 [WARNING] consumer - [NACK] id_pedido=124 tentativa=2/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:28:56,586 [WARNING] consumer - Falha simulada: id_pedido=124 cliente=Bruno valor=150.0 tentativa=3.
+2026-10-20 15:28:56,586 [ERROR] consumer - [DLQ] id_pedido=124 tentativa=3/3 motivo=valor inteiro par; NACK(requeue=False) encaminha para a DLQ.
+2026-10-20 15:28:56,590 [WARNING] consumer - Falha simulada: id_pedido=125 cliente=Carla valor=-10.0 tentativa=1.
+2026-10-20 15:28:56,590 [WARNING] consumer - [NACK] id_pedido=125 tentativa=1/3 motivo=valor negativo; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:28:57,590 [WARNING] consumer - Falha simulada: id_pedido=125 cliente=Carla valor=-10.0 tentativa=2.
+2026-10-20 15:28:57,591 [WARNING] consumer - [NACK] id_pedido=125 tentativa=2/3 motivo=valor negativo; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:28:58,592 [WARNING] consumer - Falha simulada: id_pedido=125 cliente=Carla valor=-10.0 tentativa=3.
+2026-10-20 15:28:58,592 [ERROR] consumer - [DLQ] id_pedido=125 tentativa=3/3 motivo=valor negativo; NACK(requeue=False) encaminha para a DLQ.
+2026-10-20 15:28:58,595 [INFO] consumer - [ACK] id_pedido=126 cliente=Diego valor=75.5 tentativa=1 processado.
+2026-10-20 15:34:09,883 [INFO] consumer - [ACK] id_pedido=200 cliente=Maria valor=99.9 tentativa=1 processado.
+2026-10-20 15:34:22,046 [WARNING] consumer - Falha simulada: id_pedido=201 cliente=Joao valor=150.0 tentativa=1.
+2026-10-20 15:34:22,046 [WARNING] consumer - [NACK] id_pedido=201 tentativa=1/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:34:23,047 [WARNING] consumer - Falha simulada: id_pedido=201 cliente=Joao valor=150.0 tentativa=2.
+2026-10-20 15:34:23,047 [WARNING] consumer - [NACK] id_pedido=201 tentativa=2/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:34:24,048 [WARNING] consumer - Falha simulada: id_pedido=201 cliente=Joao valor=150.0 tentativa=3.
+2026-10-20 15:34:24,048 [ERROR] consumer - [DLQ] id_pedido=201 tentativa=3/3 motivo=valor inteiro par; NACK(requeue=False) encaminha para a DLQ.
+2026-10-20 15:34:29,055 [WARNING] consumer - Falha simulada: id_pedido=202 cliente=Ana valor=-10.0 tentativa=1.
+2026-10-20 15:34:29,055 [WARNING] consumer - [NACK] id_pedido=202 tentativa=1/3 motivo=valor negativo; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:34:30,056 [WARNING] consumer - Falha simulada: id_pedido=202 cliente=Ana valor=-10.0 tentativa=2.
+2026-10-20 15:34:30,056 [WARNING] consumer - [NACK] id_pedido=202 tentativa=2/3 motivo=valor negativo; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:34:31,057 [WARNING] consumer - Falha simulada: id_pedido=202 cliente=Ana valor=-10.0 tentativa=3.
+2026-10-20 15:34:31,057 [ERROR] consumer - [DLQ] id_pedido=202 tentativa=3/3 motivo=valor negativo; NACK(requeue=False) encaminha para a DLQ.
+
+consumerDLQ logs:
+2026-10-20 15:33:03,803 [INFO] pika.adapters.utils.connection_workflow - Pika version 1.3.2 connecting to ('::1', 5672, 0, 0)
+2026-10-20 15:33:03,822 [INFO] pika.adapters.utils.io_services_utils - Socket connected: <socket.socket fd=788, family=23, type=1, proto=6, laddr=('::1', 54312, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-10-20 15:33:03,823 [INFO] pika.adapters.utils.connection_workflow - Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000250DF40A120>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000250DF40A120> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+2026-10-20 15:33:03,868 [INFO] pika.adapters.utils.connection_workflow - AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000250DF40A120> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2026-10-20 15:33:03,868 [INFO] pika.adapters.utils.connection_workflow - AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000250DF40A120> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2026-10-20 15:33:03,868 [INFO] pika.adapters.blocking_connection - Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000250DF40A120> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2026-10-20 15:33:03,868 [INFO] pika.adapters.blocking_connection - Created channel=1
+2026-10-20 15:33:03,885 [INFO] dlq-consumer - Aguardando mensagens na DLQ 'notificacoes.dlq'. Ctrl+C para encerrar.
+2026-10-20 15:33:03,886 [WARNING] dlq-consumer - [DLQ] id_pedido=124 cliente=Bruno valor=150.0 x-death=[{"count": 1, "reason": "rejected", "queue": "notificacoes", "time": "2026-10-20 18:28:56", "exchange": "notificacoes.exchange", "routing-keys": ["notificacoes"]}]
+2026-10-20 15:33:03,889 [WARNING] dlq-consumer - [DLQ] id_pedido=125 cliente=Carla valor=-10.0 x-death=[{"count": 1, "reason": "rejected", "queue": "notificacoes", "time": "2026-10-20 18:28:58", "exchange": "notificacoes.exchange", "routing-keys": ["notificacoes"]}]
+2026-10-20 15:34:24,055 [WARNING] dlq-consumer - [DLQ] id_pedido=201 cliente=Joao valor=150.0 x-death=[{"count": 1, "reason": "rejected", "queue": "notificacoes", "time": "2026-10-20 18:34:24", "exchange": "notificacoes.exchange", "routing-keys": ["notificacoes"]}]
+2026-10-20 15:34:31,063 [WARNING] dlq-consumer - [DLQ] id_pedido=202 cliente=Ana valor=-10.0 x-death=[{"count": 1, "reason": "rejected", "queue": "notificacoes", "time": "2026-10-20 18:34:31", "exchange": "notificacoes.exchange", "routing-keys": ["notificacoes"]}]
+
+desafio - term1:
+2026-10-20 15:57:18,922 [INFO] pika.adapters.blocking_connection - Created channel=1
+2026-10-20 15:57:18,938 [INFO] consumer.consumer-28948 - Instância 'consumer-28948' aguardando mensagens em 'notificacoes' (quorum, limite=3 tentativas). Ctrl+C para encerrar.
+2026-10-20 15:57:57,678 [WARNING] consumer.consumer-28948 - Falha simulada: id_pedido=300 cliente=Lucas valor=50.0 tentativa=1.
+2026-10-20 15:57:57,678 [WARNING] consumer.consumer-28948 - [NACK] id_pedido=300 tentativa=1/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:57:58,679 [WARNING] consumer.consumer-28948 - Falha simulada: id_pedido=300 cliente=Lucas valor=50.0 tentativa=3.
+2026-10-20 15:57:58,680 [ERROR] consumer.consumer-28948 - [DLQ] id_pedido=300 tentativa=3/3 motivo=valor inteiro par; NACK(requeue=False) encaminha para a DLQ.
+2026-10-20 15:58:05,489 [WARNING] consumer.consumer-28948 - Falha simulada: id_pedido=301 cliente=Marcos valor=60.0 tentativa=2.
+2026-10-20 15:58:05,490 [WARNING] consumer.consumer-28948 - [NACK] id_pedido=301 tentativa=2/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:58:11,068 [WARNING] consumer.consumer-28948 - Falha simulada: id_pedido=303 cliente=Tiago valor=70.0 tentativa=1.
+2026-10-20 15:58:11,069 [WARNING] consumer.consumer-28948 - [NACK] id_pedido=303 tentativa=1/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:58:12,069 [WARNING] consumer.consumer-28948 - Falha simulada: id_pedido=303 cliente=Tiago valor=70.0 tentativa=3.
+2026-10-20 15:58:12,069 [ERROR] consumer.consumer-28948 - [DLQ] id_pedido=303 tentativa=3/3 motivo=valor inteiro par; NACK(requeue=False) encaminha para a DLQ.
+
+term2:
+2026-10-20 15:57:41,589 [INFO] pika.adapters.blocking_connection - Created channel=1
+2026-10-20 15:57:41,606 [INFO] consumer.consumer-25836 - Instância 'consumer-25836' aguardando mensagens em 'notificacoes' (quorum, limite=3 tentativas). Ctrl+C para encerrar.
+2026-10-20 15:57:57,682 [WARNING] consumer.consumer-25836 - Falha simulada: id_pedido=300 cliente=Lucas valor=50.0 tentativa=2.
+2026-10-20 15:57:57,683 [WARNING] consumer.consumer-25836 - [NACK] id_pedido=300 tentativa=2/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:58:05,485 [WARNING] consumer.consumer-25836 - Falha simulada: id_pedido=301 cliente=Marcos valor=60.0 tentativa=1.
+2026-10-20 15:58:05,485 [WARNING] consumer.consumer-25836 - [NACK] id_pedido=301 tentativa=1/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+2026-10-20 15:58:06,486 [WARNING] consumer.consumer-25836 - Falha simulada: id_pedido=301 cliente=Marcos valor=60.0 tentativa=3.
+2026-10-20 15:58:06,486 [ERROR] consumer.consumer-25836 - [DLQ] id_pedido=301 tentativa=3/3 motivo=valor inteiro par; NACK(requeue=False) encaminha para a DLQ.
+2026-10-20 15:58:11,073 [WARNING] consumer.consumer-25836 - Falha simulada: id_pedido=303 cliente=Tiago valor=70.0 tentativa=2.
+2026-10-20 15:58:11,073 [WARNING] consumer.consumer-25836 - [NACK] id_pedido=303 tentativa=2/3 motivo=valor inteiro par; NACK(requeue=True) solicita redelivery.
+
+term1:
+2026-10-20 16:00:40,786 [INFO] consumer.notificacoes - [Notificações] Processando id_pedido=400 cliente=Julia valor=120.0
+term2:
+2026-10-20 16:00:40,786 [INFO] consumer.analytics - [Analytics] Processando id_pedido=400 cliente=Julia valor=120.0
